@@ -2,20 +2,15 @@ package main
 
 import (
 	"./vm"
+	"fmt"
 )
 
 func main() {
-	prog := []int {
-		vm.ALC, 2,
-		vm.PSH, 10,
-		vm.LST, 0,
-		vm.LGT, 0,
-		vm.ARG, 0,
-		vm.HLT,
+	s := vm.NewStack()
+	for i := 0; i < 20; i++ {
+		s.Push(vm.NewInt(i * (i + 1)))
+		fmt.Println(s.Pop().String())
 	}
-
-	m := vm.InitMachine(prog, vm.NativeInt(-4))
-	m.Print()
-	m.Start()
-	m.Print()
+	s.Push(vm.NewString("Foo"))
+	fmt.Println(s)
 }
