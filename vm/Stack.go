@@ -33,7 +33,5 @@ func (s *Stack) String() string {
 		}
 	}
 
-
-
 	return str + "]"
 }

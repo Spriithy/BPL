@@ -250,7 +250,7 @@ func (o *NativeValue) String() string {
 	case BoolType:
 		return fmt.Sprintf("%v", o.bool)
 	case ByteType:
-		return fmt.Sprintf("%v", o.byte)
+		return fmt.Sprintf("%#v", o.byte)
 	case IntType:
 		return fmt.Sprintf("%v", o.int)
 	case UIntType:
