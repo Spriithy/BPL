@@ -2,15 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cd1cb92-7c33-451d-9ad1-d2f5ea507196" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/compiler/Lexer.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/compiler/Token.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/main.bpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vm/Instructions.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vm/Machine.go" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vm/Program.go" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Main.go" afterPath="$PROJECT_DIR$/Main.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vm/Natives.go" afterPath="$PROJECT_DIR$/vm/Natives.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/compiler/Lexer.go" afterPath="$PROJECT_DIR$/compiler/Lexer.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.bpl" afterPath="$PROJECT_DIR$/main.bpl" />
     </list>
     <ignored path="BPL.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,8 +45,8 @@
           <file leaf-file-name="Lexer.go" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/compiler/Lexer.go">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="255">
-                  <caret line="17" column="66" selection-start-line="17" selection-start-column="66" selection-end-line="17" selection-end-column="66" />
+                <state relative-caret-position="240">
+                  <caret line="16" column="46" selection-start-line="16" selection-start-column="46" selection-end-line="16" selection-end-column="46" />
                   <folding>
                     <element signature="e#18#48#0" expanded="true" />
                   </folding>
@@ -79,8 +73,8 @@
           <file leaf-file-name="main.bpl" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/main.bpl">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="510">
-                  <caret line="34" column="6" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+                <state relative-caret-position="525">
+                  <caret line="35" column="12" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
                   <folding />
                 </state>
               </provider>
@@ -790,8 +784,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/compiler/Lexer.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="66" selection-start-line="17" selection-start-column="66" selection-end-line="17" selection-end-column="66" />
+        <state relative-caret-position="240">
+          <caret line="16" column="46" selection-start-line="16" selection-start-column="46" selection-end-line="16" selection-end-column="46" />
           <folding>
             <element signature="e#18#48#0" expanded="true" />
           </folding>
@@ -800,8 +794,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.bpl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="6" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+        <state relative-caret-position="525">
+          <caret line="35" column="12" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
           <folding />
         </state>
       </provider>

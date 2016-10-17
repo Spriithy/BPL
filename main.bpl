@@ -29,10 +29,11 @@ struct Lexer {
     }
 
     private process() {
-label:
         Io.printf("%-5dc:%c\tn:%c\n", at, cur, nxt)
         switch cur {
-        match '\\':
+        match '\\': break;
+        any:
+            break;
         }
     }
 

@@ -14,7 +14,7 @@ var lxOPERATORS = []string{
 var lxKEYWORDS = []string{
 	"var", "const", "struct", "enum", "public", "private", "static", "new",
 
-	"if", "else", "for", "while", "unless", "goto", "return", "switch", "match",
+	"if", "else", "for", "while", "unless", "return", "switch", "match",
 	"true", "false", "null", "final", "this", "break", "skip",
 	"int", "long", "float", "double", "complex", "byte", "string",
 	"uint", "ulong", "bool" }
