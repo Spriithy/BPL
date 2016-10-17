@@ -66,21 +66,25 @@ const (
 func TypeNameOf(o NativeObject) string {
 	switch o.TypeOf() {
 	case VoidType:
-		return "Void";
+		return "Void"
 	case BoolType:
-		return "Bool";
+		return "Bool"
 	case ByteType:
-		return "Byte";
+		return "Byte"
 	case IntType:
-		return "Int";
+		return "Int"
 	case UIntType:
-		return "UInt";
+		return "UInt"
+	case LongType:
+		return "Long"
+	case ULongType:
+		return "ULong"
 	case FloatType:
-		return "Float";
+		return "Float"
 	case DoubleType:
-		return "Double";
+		return "Double"
 	case ComplexType:
-		return "Complex";
+		return "Complex"
 	case StringType:
 		return "String"
 	case ObjectType:
@@ -229,7 +233,7 @@ func (o *NativeValue) Equals(other NativeValue) bool {
 	case FloatType:
 		return o.float == other.float
 	case DoubleType:
-		return o.double == other.double;
+		return o.double == other.double
 	case ComplexType:
 		return o.complex == other.complex
 	case StringType:
@@ -241,6 +245,32 @@ func (o *NativeValue) Equals(other NativeValue) bool {
 
 func (o *NativeValue) TypeOf() NativeType {
 	return o.typ
+}
+
+func (o *NativeValue) IsZero() bool {
+	switch o.typ {
+	case VoidType:
+		return true
+	case BoolType:
+		return o.bool == false
+	case ByteType:
+		return o.byte == byte(0)
+	case IntType:
+		return o.int == int(0)
+	case UIntType:
+		return o.uint == uint(0)
+	case LongType:
+		return o.long == int64(0)
+	case ULongType:
+		return o.ulong == uint64(0)
+	case FloatType:
+		return o.float == float32(0)
+	case DoubleType:
+		return o.double == float64(0)
+	case ComplexType:
+		return o.complex == complex128(0)
+	}
+	return false
 }
 
 func (o *NativeValue) String() string {
