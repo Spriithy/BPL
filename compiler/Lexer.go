@@ -16,9 +16,9 @@ var lxOPERATORS = []string{
 var lxKEYWORDS = []string{
 	"const", "struct", "enum", "public", "private", "static", "new", "if",
 	"else", "for", "while", "unless", "return", "switch", "match", "true",
-	"false", "null", "final", "this", "break", "continue", "default", "int",
-	"long", "float", "double", "complex", "byte", "string", "import", "uint",
-	"ulong", "bool", "native", "package" }
+	"false", "null", "break", "continue", "default", "int", "long", "float",
+	"double", "complex", "byte", "string", "import", "uint",  "ulong", "bool",
+	"native", "package" }
 
 type Lexer struct {
 	Path, input  string
@@ -61,7 +61,7 @@ func (l *Lexer) addtoken(tok *Token) {
 }
 
 func (l *Lexer) process() {
-	fmt.Printf("%-5d: %#v\n", l.at, string(l.cur))
+	//fmt.Printf("%-5d: %#v\n", l.at, string(l.cur))
 	c, n := string(l.cur), string(l.nxt)
 	if c + n == "//" {
 		l.comment(0)

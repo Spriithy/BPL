@@ -1,39 +1,25 @@
 package main
 
 import (
-	"github.com/Spriithy/BPL/compiler"
+	//"github.com/Spriithy/BPL/compiler"
+	"github.com/Spriithy/BPL/compiler/lexer"
+	"fmt"
 )
 
 func main() {
-	/*	s := vm.NewStack()
 
-		for i := 0; i < 20; i++ {
-			s.Push(vm.NewInt(i * (i + 1)))
-			fmt.Println(s.Pop().String())
-		}
+	//lx := compiler.NewLexer("main.bpl")
+	//lx.Lex()
 
-		s.Push(vm.NewString("Foo"))
-		fmt.Println(s)
+	//ps := compiler.NewParser(lx.Tokens)
+	//ps.Parse()
 
-		mem := vm.NewMemory()
-		mem.Alloc(19)
-		mem.Write(100, vm.NewByte(10))
+	lxr := lexer.Lexer("main.bpl")
+	lxr.Lex()
 
-		fmt.Println(mem.String())
-		fmt.Println(mem.Read(1))
+	p := lxr.List.Next
+	for ; p != nil; p = p.Next {
+		fmt.Println(p.String())
+	}
 
-		p := new([]vm.VMInstruction)
-		(*p)[0] = vm.Push{vm.NewInt(10)}
-		(*p)[1] = vm.Dec{}
-		(*p)[2] = vm.Halt{}
-
-		m := vm.NewMachine(p)
-		m.Start()
-
-		*/
-	lx := compiler.NewLexer("main.bpl")
-	lx.Lex()
-
-	ps := compiler.NewParser(lx.Tokens)
-	ps.Parse()
 }

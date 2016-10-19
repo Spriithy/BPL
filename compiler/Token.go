@@ -2,10 +2,10 @@ package compiler
 
 import "fmt"
 
-type Type int
+type TokenType int
 
 const (
-	tEOF Type = iota
+	tEOF TokenType = iota
 	tNL
 	UNKNOWN
 
@@ -115,7 +115,7 @@ var tokMEANING = []string{
 type Token struct {
 	sym  string
 	lno  int
-	typ  Type
+	typ  TokenType
 
 	Next *Token
 }
@@ -214,6 +214,14 @@ func Punctuation(sym byte, lno int) *Token {
 	case '}': typ = RBRACE
 	}
 	return &Token{string(sym), lno, typ, nil}
+}
+
+func (t *Token) Type() TokenType {
+	return t.typ
+}
+
+func (t *Token) Symbol() string {
+	return t.sym
 }
 
 func (t *Token) String() string {
