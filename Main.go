@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./compiler"
+	"github.com/Spriithy/BPL/compiler"
 )
 
 func main() {
