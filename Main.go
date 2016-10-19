@@ -2,7 +2,6 @@ package main
 
 import (
 	"./compiler"
-	"fmt"
 )
 
 func main() {
@@ -34,8 +33,7 @@ func main() {
 		*/
 	lx := compiler.NewLexer("main.bpl")
 	lx.Lex()
-	L := lx.Tokens
-	for p := L.Next; p != nil; p = p.Next {
-		fmt.Println(p.String())
-	}
+
+	ps := compiler.NewParser(lx.Tokens)
+	ps.Parse()
 }

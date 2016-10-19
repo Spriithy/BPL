@@ -6,14 +6,14 @@ type Type int
 
 const (
 	tEOF Type = iota
+	tNL
 	UNKNOWN
 
 	KEYWORD
 	IDENTIFIER
 	NUMBER
+	CHAR
 	STRING
-	BOOL
-	NULL
 
 	LBRACE
 	RBRACE
@@ -23,7 +23,7 @@ const (
 	RBRACK
 
 	DOT
-	DDDOT
+	ELLIPSIS
 	COMMA
 	COLON
 	SEMICOL
@@ -58,6 +58,60 @@ const (
 	bXOR
 )
 
+var tokMEANING = []string{
+	tEOF:       "~~~~~~~~~~~~~~",
+	tNL:        "--------------",
+	UNKNOWN:    "Unknown",
+
+	KEYWORD:    "Keyword",
+	IDENTIFIER: "Identifier",
+	NUMBER:     "Number",
+	CHAR:       "Char",
+	STRING:     "String",
+
+	LBRACE:     "LBrace",
+	RBRACE:     "RBrace",
+	LPAREN:     "LParen",
+	RPAREN:     "RParen",
+	LBRACK:     "LBracket",
+	RBRACK:     "RBracket",
+
+	DOT:        "Dot",
+	ELLIPSIS:   "Ellipsis",
+	COMMA:      "Comma",
+	COLON:      "Colon",
+	SEMICOL:    "Semicolon",
+
+	ASSIGN:     "Assign",
+	ARROW:      "Arrow",
+	COLCOL:     "ColCol",
+	OPASSIGN:   "OpAssign",
+	PLUS:       "Plus",
+	PLUSPLUS:   "PlusPlus",
+	MINUS:      "Minus",
+	MINUSMINUS: "MinusMinus",
+	TIMES:      "Times",
+	POW:        "Pow",
+	DIV:        "Div",
+	EUCL:       "Eucl",
+	MOD:        "Mod",
+	LSFT:       "Lshift",
+	RSFT:       "Rshift",
+	GT:         "Gt",
+	GEQ:        "Geq",
+	LT:         "Lt",
+	LEQ:        "Leq",
+	EQUALS:     "Equals",
+	NEQUALS:    "Nequals",
+	NOT:        "Not",
+	AND:        "And",
+	OR:         "Or",
+	bNOT:       "Bnot",
+	bAND:       "Band",
+	bOR:        "Bor",
+	bXOR:       "Bxor",
+}
+
 type Token struct {
 	sym  string
 	lno  int
@@ -70,8 +124,8 @@ func EOF(lno int) *Token {
 	return &Token{"EOF", lno, tEOF, nil}
 }
 
-func Null(lno int) *Token {
-	return &Token{"null", lno, NULL, nil}
+func NL(lno int) *Token {
+	return &Token{"NewLine", lno, tNL, nil}
 }
 
 func Keyword(sym string, lno int) *Token {
@@ -82,16 +136,16 @@ func Identifier(sym string, lno int) *Token {
 	return &Token{sym, lno, IDENTIFIER, nil}
 }
 
+func Char(sym byte, lno int) *Token {
+	return &Token{string(int(sym)), lno, CHAR, nil}
+}
+
 func Number(sym string, lno int) *Token {
 	return &Token{sym, lno, NUMBER, nil}
 }
 
 func String(sym string, lno int) *Token {
 	return &Token{sym, lno, STRING, nil}
-}
-
-func Bool(sym string, lno int) *Token {
-	return &Token{sym, lno, BOOL, nil}
 }
 
 func Operator(sym string, lno int) *Token {
@@ -141,27 +195,35 @@ func Operator(sym string, lno int) *Token {
 	case ".": typ = DOT
 	case "->": typ = ARROW
 	case "::": typ = COLCOL
-	case "...": typ = DDDOT
+	case "...": typ = ELLIPSIS
 	}
 	return &Token{sym, lno, typ, nil}
 }
 
-func Punctuation(sym string, lno int) *Token {
+func Punctuation(sym byte, lno int) *Token {
 	typ := UNKNOWN
 	switch sym {
-	case ",": typ = COMMA
-	case ":": typ = COLON
-	case ";": typ = SEMICOL
-	case "(": typ = LPAREN
-	case ")": typ = RPAREN
-	case "[": typ = LBRACE
-	case "]": typ = RBRACE
-	case "{": typ = LBRACK
-	case "}": typ = RBRACK
+	case ',': typ = COMMA
+	case ':': typ = COLON
+	case ';': typ = SEMICOL
+	case '(': typ = LPAREN
+	case ')': typ = RPAREN
+	case '[': typ = LBRACK
+	case ']': typ = RBRACK
+	case '{': typ = LBRACE
+	case '}': typ = RBRACE
 	}
-	return &Token{sym, lno, typ, nil}
+	return &Token{string(sym), lno, typ, nil}
 }
 
 func (t *Token) String() string {
-	return fmt.Sprintf("([%d]: %v, %#v)", t.lno, t.typ, t.sym)
+	if t.typ == STRING || t.typ == IDENTIFIER {
+		return fmt.Sprintf("%-3d %-16v%#v", t.lno, tokMEANING[t.typ], t.sym)
+	}
+
+	if t.typ == CHAR {
+		return fmt.Sprintf("%-3d %-16v%#v", t.lno, tokMEANING[t.typ], t.sym)
+	}
+
+	return fmt.Sprintf("%-3d %-16v%s", t.lno, tokMEANING[t.typ], t.sym)
 }
