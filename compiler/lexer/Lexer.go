@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"github.com/Spriithy/BPL/compiler/token"
 )
 
 var lxKeywords = map[string]bool{
@@ -33,95 +34,20 @@ var lxOperators = map[string]string{
 	"{":"LBrace", "}":"RBack",
 }
 
-/*
-Builtin Token types :
----------------------
-Unknown
-EOF
-Newline
-Keyword
-Identifier
-Number
-Character
-String
-LBrace
-RBrace
-LParen
-RParen
-LBrack
-RBrack
-Dot
-Ellipsis
-Comma
-Colon
-Semicolon
-Assign
-AssignOP
-Arrow
-ColBlock
-Plus
-Minus
-Times
-Divide
-Mod
-PlusPlus
-MinusMinus
-Pow
-Lt
-Leq
-Lshift
-NotEquals
-Equals
-Rshift
-Geq
-Gt
-Bang
-Not
-Or
-And
-Xor
-bAnd
-bOr
- */
-
-type Pos struct {
-	Start, End int // Both inclusive
-}
-
-func (p *Pos) String() string {
-	return fmt.Sprintf("(%d,%d)", p.Start, p.End)
-}
-
-type Token struct {
-	Kind, Sym string
-	Pos, Line Pos
-	Lno       int
-	Next      *Token
-}
-
-func (t *Token) String() string {
-	vfmt := "%-s"
-	sym := t.Sym
-	if t.Kind == "String" {
-		vfmt = "%-#v"
-	} else if t.Kind == "Character" || t.Kind == "Identifier" {
-		vfmt = "'%-s'"
-		sym = fmt.Sprintf("%#v", t.Sym)
-		sym = sym[1:len(sym) - 1]
-	}
-	return fmt.Sprintf("[%4d]\t%-14s " + vfmt, t.Lno, t.Kind, sym)
-}
+const INLINE_COMMENT_START = "#"
+const BLOCK_COMMENT_START = "(*"
+const BLOCK_COMMENT_END = "*)"
 
 type lexer struct {
-	path, input   string
+	Path, input   string
 	pos, caret    int
 	lns, lne, lno int
-	List, tail    *Token
+	List          token.TQueue
 }
 
 func Lexer(path string) *lexer {
 	lxr := new(lexer)
-	lxr.path = path
+	lxr.Path = path
 
 	content, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -130,20 +56,24 @@ func Lexer(path string) *lexer {
 
 	lxr.input = string(content) + "\n\n"
 
-	lxr.List = &Token{"EOF", "", Pos{0, 0}, Pos{0, 0}, 0, nil}
-	lxr.tail = lxr.List
+	lxr.List = *token.TokenQueue()
 
 	return lxr
 }
 
+func (l *lexer) Source() string {
+	return l.input
+}
+
+
 func (l *lexer) errorf(format string, a ...interface{}) {
-	fmt.Printf("%s#%d: ", l.path, l.lno)
+	fmt.Printf("%s#%d: ", l.Path, l.lno)
 	fmt.Printf(format + "\n", a ...)
 	os.Exit(1)
 }
 
 func (l *lexer) warningf(format string, a... interface{}) {
-	fmt.Printf("%s#%d: ", l.path, l.lno)
+	fmt.Printf("%s#%d: ", l.Path, l.lno)
 	fmt.Printf(format + "\n", a ...)
 }
 
@@ -157,11 +87,11 @@ func (l *lexer) Lex() {
 	l.peekLine()
 	for ; l.pos < len(l.input) - 2; l.pos++ {
 		cc := l.input[l.pos]
-		if l.input[l.pos:l.pos + 2] == "//" {
+		if l.input[l.pos:l.pos + len(INLINE_COMMENT_START)] == INLINE_COMMENT_START {
 			for ; l.input[l.pos + 1] != '\n'; l.pos++ {}
 			l.caret = l.pos
-		} else if l.input[l.pos:l.pos + 2] == "/*" {
-			for ; l.input[l.pos:l.pos + 2] != "*/"; l.pos++ {
+		} else if l.input[l.pos:l.pos + 2] == BLOCK_COMMENT_START {
+			for ; l.input[l.pos:l.pos + 2] != BLOCK_COMMENT_END; l.pos++ {
 				if l.input[l.pos] == '\n' {
 					l.lno++
 					l.lns = l.pos
@@ -189,7 +119,9 @@ func (l *lexer) Lex() {
 				if l.input[l.caret + 1] == '.' && !d {
 					d = true
 				} else if l.input[l.caret + 1] == '.' {
-					l.errorf("Malformed decimal number on line %d\n\t%s\n\t%s", l.lno, l.input[l.lns + 1:l.lne], strings.Repeat(" ", l.pos - l.lns - 1) + strings.Repeat("~", l.caret - l.pos + 1) + "^")
+					l.errorf("Malformed decimal number on line %d\n\t%s\n\t%s",
+						l.lno, l.input[l.lns + 1:l.lne],
+						strings.Repeat(" ", l.pos - l.lns - 1) + strings.Repeat("~", l.caret - l.pos + 1) + "^")
 				}
 			}
 			l.addToken("Number")
@@ -198,7 +130,9 @@ func (l *lexer) Lex() {
 			chr := byte(0)
 			if l.input[l.pos + 1] == '\\' {
 				if l.input[l.pos + 3] != '\'' {
-					l.errorf("Expected end of character litteral on line %d\n\t%s\n\t%s", l.lno, l.input[l.lns + 1:l.lne], strings.Repeat(" ", l.pos - l.lns - 1) + strings.Repeat("~", l.caret - l.pos + 4) + "^")
+					l.errorf("Expected end of character litteral on line %d\n\t%s\n\t%s",
+						l.lno, l.input[l.lns + 1:l.lne],
+						strings.Repeat(" ", l.pos - l.lns - 1) + strings.Repeat("~", l.caret - l.pos + 4) + "^")
 				}
 				switch l.input[l.pos + 2] {
 				case 'n': chr = '\n'
@@ -207,13 +141,17 @@ func (l *lexer) Lex() {
 				case '\'':chr = '\''
 				case '\\':chr = '\\'
 				default:
-					l.errorf("Invalid escape sequence in character litteral on line %d\n\t%s\n\t%s", l.lno, l.input[l.lns + 1:l.lne], strings.Repeat(" ", l.pos - l.lns - 1) + strings.Repeat("~", l.caret - l.pos + 5))
+					l.errorf("Invalid escape sequence in character litteral on line %d\n\t%s\n\t%s",
+						l.lno, l.input[l.lns + 1:l.lne],
+						strings.Repeat(" ", l.pos - l.lns - 1) + strings.Repeat("~", l.caret - l.pos + 5))
 				}
 				l.pos += 3
 			} else {
 				chr = l.input[l.pos + 1]
 				if l.input[l.pos + 2] != '\'' {
-					l.errorf("Expected end of character litteral on line %d\n\t%s\n\t%s", l.lno, l.input[l.lns + 1:l.lne], strings.Repeat(" ", l.pos - l.lns - 1) + strings.Repeat("~", l.caret - l.pos + 3) + "^")
+					l.errorf("Expected end of character litteral on line %d\n\t%s\n\t%s",
+						l.lno, l.input[l.lns + 1:l.lne],
+						strings.Repeat(" ", l.pos - l.lns - 1) + strings.Repeat("~", l.caret - l.pos + 3) + "^")
 				}
 				l.pos += 2
 			}
@@ -235,7 +173,9 @@ func (l *lexer) Lex() {
 					case '"': str += "\""
 					case '\\':str += "\\"
 					default:
-						l.errorf("Invalid escape sequence in string litteral on line %d\n\t%s\n\t%s", l.lno, l.input[l.lns + 1:l.lne], strings.Repeat(" ", l.pos - l.lns - 1) + strings.Repeat("~", l.caret - l.pos + 1) + "^")
+						l.errorf("Invalid escape sequence in string litteral on line %d\n\t%s\n\t%s",
+							l.lno, l.input[l.lns + 1:l.lne],
+							strings.Repeat(" ", l.pos - l.lns - 1) + strings.Repeat("~", l.caret - l.pos + 1) + "^")
 					}
 					esc = false
 					l.caret++
@@ -255,10 +195,10 @@ func (l *lexer) Lex() {
 			l.lno++
 			l.lns = l.pos
 			l.peekLine()
-			if l.tail.Sym != "NewLine" {
-				l.appendToken("--------------", "NewLine")
-				continue
-			}
+			//if l.List.PeekTail().Sym != "NewLine" {
+			//	l.appendToken("--------------", "NewLine")
+			//	continue
+			//}
 		} else {
 			print(string(cc))
 		}
@@ -285,8 +225,7 @@ func isNumPart(b byte) bool {
 }
 
 func (l *lexer) appendToken(kind, value string) {
-	l.tail.Next = &Token{kind, value, Pos{l.pos, l.caret}, Pos{l.lns, l.lne}, l.lno, nil}
-	l.tail = l.tail.Next
+	l.List.Enqueue(&token.Token{kind, value, token.Pos{l.pos, l.caret}, token.Pos{l.lns, l.lne}, l.lno, nil})
 }
 
 func (l *lexer) addToken(kind string) {

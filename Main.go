@@ -1,9 +1,8 @@
 package main
 
 import (
-	//"github.com/Spriithy/BPL/compiler"
 	"github.com/Spriithy/BPL/compiler/lexer"
-	"fmt"
+	"github.com/Spriithy/BPL/compiler/parser"
 )
 
 func main() {
@@ -17,9 +16,14 @@ func main() {
 	lxr := lexer.Lexer("main.bpl")
 	lxr.Lex()
 
-	p := lxr.List.Next
-	for ; p != nil; p = p.Next {
-		fmt.Println(p.String())
+	p := lxr.List.PeekHead()
+	for ; p.Next != nil; p = p.Next {
+		println(p.String())
 	}
+
+	println("-----------------------------")
+
+	pr := parser.Parser(lxr.Path, lxr.Source(), lxr.List)
+	pr.Parse()
 
 }
