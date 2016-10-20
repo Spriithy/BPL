@@ -10,9 +10,11 @@ var prOps = map[string]struct {
 	prec   int
 	rAssoc bool
 }{
-	"++" : {30, false}, "--": {30, false},
-	"!"  : {29, true}, "~"  : {30, true},
+	"++" : {50, false}, "--": {50, false},
+	"."  : {40, false},
+	"!"  : {30, true}, "~"  : {30, true},
 	"**" : {28, true},
+	"-u" : {29, true},
 	"*"  : {27, false}, "/"  : {27, false}, "%" : {27, false},
 	"+"  : {26, false}, "-"  : {26, false},
 	">>" : {25, false}, "<<" : {25, false},
@@ -120,8 +122,6 @@ func (p *parser) ShuntingYard(input token.TQueue) token.TQueue {
 				}
 				output.Enqueue(op)
 			}
-		case "Identifier":
-
 		default:
 			if o1, isOp := prOps[tok.Sym]; isOp {
 				// token is an operator

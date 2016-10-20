@@ -27,7 +27,7 @@ var lxOperators = map[string]string{
 	"!":"Bang", "++":"PlusPlus", "--":"MinusMinus", "**":"Pow", "->":"Arrow",
 	"==":"Equals", "<<":"Lshift", ">>":"Rshift", "!=":"NotEquals",
 	"+=":"OpAssign", "-=":"OpAssign", "*=":"OpAssign", "/=":"OpAssign",
-	"**=":"OpAssign", "<<=":"OpAssign", ">>=":"OpAssign",
+	"**=":"OpAssign", "<<=":"OpAssign", ">>=":"OpAssign", "-u":"Unary Minus",
 	"&=":"OpAssign", "|=":"OpAssign", "^=":"OpAssign", "~=":"OpAssign",
 	"||":"Or", "&&":"And", "...":"Ellipsis", ".":"Dot", "::":"ColBlock",
 	":":"Colon", ",":"Comma", "(":"LParen", ")":"RParen", "[":"LBrack", "]":"RBrack",
@@ -64,7 +64,6 @@ func Lexer(path string) *lexer {
 func (l *lexer) Source() string {
 	return l.input
 }
-
 
 func (l *lexer) errorf(format string, a ...interface{}) {
 	fmt.Printf("%s#%d: ", l.Path, l.lno)
@@ -189,7 +188,19 @@ func (l *lexer) Lex() {
 			l.caret = l.pos + 1
 			for ; lxOperators[l.input[l.pos:l.caret]] != ""; l.caret++ {}
 			l.caret--
-			l.addToken(lxOperators[l.input[l.pos:l.caret]])
+			op := l.input[l.pos:l.caret]
+			if op == "-" /* Treating unary or binary minus appart */ {
+				lt := l.List.PeekTail()
+				ltk := lt.Kind
+				if ltk == "Number" || ltk == "Identifier" || ltk == "RParen" ||
+					ltk == "RBrack" {
+					l.appendToken("Minus", "-")
+				} else {
+					l.appendToken("UnaryMinus", "-u")
+				}
+			} else {
+				l.addToken(lxOperators[op])
+			}
 			l.pos = l.caret - 1
 		} else if cc == '\n' {
 			l.lno++

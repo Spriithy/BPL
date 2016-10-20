@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cd1cb92-7c33-451d-9ad1-d2f5ea507196" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/compiler/token/Structures.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/compiler/token/Token.go" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/compiler/Lexer.go" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/compiler/Parser.go" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/compiler/SymTable.go" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/compiler/Token.go" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Main.go" afterPath="$PROJECT_DIR$/Main.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/compiler/lexer/Lexer.go" afterPath="$PROJECT_DIR$/compiler/lexer/Lexer.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/compiler/parser/Parser.go" afterPath="$PROJECT_DIR$/compiler/parser/Parser.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.bpl" afterPath="$PROJECT_DIR$/main.bpl" />
@@ -39,8 +32,8 @@
       <file leaf-file-name="Main.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="42" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+            <state relative-caret-position="390">
+              <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
               <folding>
                 <element signature="e#14#109#0" expanded="true" />
               </folding>
@@ -51,8 +44,8 @@
       <file leaf-file-name="Parser.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/compiler/parser/Parser.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="123" column="0" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+            <state relative-caret-position="225">
+              <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
               <folding>
                 <element signature="e#16#81#0" expanded="true" />
               </folding>
@@ -70,21 +63,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.bpl" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.bpl" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.bpl">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="0" column="10" selection-start-line="0" selection-start-column="10" selection-end-line="0" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Lexer.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Lexer.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/compiler/lexer/Lexer.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="120" column="27" selection-start-line="120" selection-start-column="27" selection-end-line="120" selection-end-column="27" />
+            <state relative-caret-position="642">
+              <caret line="193" column="30" selection-start-line="193" selection-start-column="30" selection-end-line="193" selection-end-column="30" />
               <folding>
                 <element signature="e#15#111#0" expanded="true" />
               </folding>
@@ -146,9 +139,9 @@
         <option value="$PROJECT_DIR$/compiler/token/Token.go" />
         <option value="$PROJECT_DIR$/compiler/token/Structures.go" />
         <option value="$PROJECT_DIR$/Main.go" />
-        <option value="$PROJECT_DIR$/main.bpl" />
-        <option value="$PROJECT_DIR$/compiler/parser/Parser.go" />
         <option value="$PROJECT_DIR$/compiler/lexer/Lexer.go" />
+        <option value="$PROJECT_DIR$/compiler/parser/Parser.go" />
+        <option value="$PROJECT_DIR$/main.bpl" />
       </list>
     </option>
   </component>
@@ -848,16 +841,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="42" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
-          <folding>
-            <element signature="e#14#109#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/compiler/token/Structures.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="660">
@@ -866,31 +849,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.bpl">
+    <entry file="file://$PROJECT_DIR$/compiler/lexer/Lexer.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="642">
+          <caret line="193" column="30" selection-start-line="193" selection-start-column="30" selection-end-line="193" selection-end-column="30" />
+          <folding>
+            <element signature="e#15#111#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
+          <folding>
+            <element signature="e#14#109#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/compiler/parser/Parser.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="123" column="0" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+        <state relative-caret-position="225">
+          <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
           <folding>
             <element signature="e#16#81#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/compiler/lexer/Lexer.go">
+    <entry file="file://$PROJECT_DIR$/main.bpl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="120" column="27" selection-start-line="120" selection-start-column="27" selection-end-line="120" selection-end-column="27" />
-          <folding>
-            <element signature="e#15#111#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="10" selection-start-line="0" selection-start-column="10" selection-end-line="0" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
