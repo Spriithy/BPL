@@ -1,23 +1,106 @@
 package ast
 
-import "github.com/Spriithy/BPL/compiler/parser"
+import (
+	"github.com/Spriithy/BPL/compiler/token"
+)
 
-type ASTNode struct {
-	leaf bool
+func MakeNode(val token.Token) *Node {
+	val.Next = nil
+	return &Node{val, nil, nil}
 }
 
-func (n *ASTNode) IsLeaf() bool {
-	return n.leaf
+type NStack []*Node
+
+func (s NStack) Empty() bool {
+	return len(s) == 0
 }
 
-// CONSTANT NODE ---------------------------------------------------------------
-
-type ConstantNode struct {
-	ASTNode
-	Type  parser.ConstantType
-	Value interface{}
+func (s NStack) PeekTop() *Node {
+	if s.Empty() {
+		return nil
+	}
+	return s[len(s) - 1]
 }
 
-func MakeConstantNode(t parser.ConstantType, val interface{}) *ConstantNode {
-	return &ConstantNode{ASTNode{true}, t, val}
+func (s *NStack) Push(n *Node) {
+	(*s) = append((*s), n)
+}
+
+func (s *NStack) Pop() *Node {
+	if s.Empty() {
+		return nil
+	}
+	d := (*s)[len(*s) - 1]
+	(*s) = (*s)[:len(*s) - 1]
+	return d
+}
+
+type Node struct {
+	Tok     token.Token
+
+	Child   *Node
+	Sibling *Node
+}
+
+func (n *Node) AddChild(node *Node) {
+	if node == nil {
+		return
+	}
+
+	if n.IsLeaf() {
+		n.Child = node
+		return
+	}
+
+	node.Sibling = n.Child
+	n.Child = node
+}
+
+func (n *Node) AddSibling(node *Node) {
+	if node == nil {
+		return
+	}
+
+	p := n
+	for ; p.Sibling != nil; p = p.Sibling {}
+	p.Sibling = node
+}
+
+func (n *Node) IsLeaf() bool {
+	return n.Child == nil
+}
+
+/*
+	-> Value or Name if any
+		-> child0
+		-> child0.sibling
+		...
+	-> sibling
+ */
+func (n *Node) String() string {
+	str := n.Print("")
+	return str[:len(str) - 1]
+}
+
+func (n *Node) Print(prefix string) string {
+	pat := "┣ "
+	if n.Sibling == nil {
+		pat = "┗ "
+	}
+
+	ext := "    "
+	if n.Child != nil && n.Sibling != nil {
+		ext = "┃   "
+	}
+
+	str := prefix + pat + n.Tok.ShortString() + "\n"
+	if n.Child != nil {
+		str += n.Child.Print(prefix + ext)
+	}
+
+	if n.Sibling != nil {
+		str += n.Sibling.Print(prefix)
+	}
+
+	return str
 }

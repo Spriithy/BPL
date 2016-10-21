@@ -31,7 +31,7 @@ var lxOperators = map[string]string{
 	"&=":"OpAssign", "|=":"OpAssign", "^=":"OpAssign", "~=":"OpAssign",
 	"||":"Or", "&&":"And", "...":"Ellipsis", ".":"Dot", "::":"ColBlock",
 	":":"Colon", ",":"Comma", "(":"LParen", ")":"RParen", "[":"LBrack", "]":"RBrack",
-	"{":"LBrace", "}":"RBack",
+	"{":"LBrace", "}":"RBack", ";":"Semicolon",
 }
 
 const INLINE_COMMENT_START = "#"
@@ -108,7 +108,14 @@ func (l *lexer) Lex() {
 			if lxKeywords[l.input[l.pos:l.caret]] {
 				l.addToken("Keyword")
 			} else {
-				l.addToken("Identifier")
+				i := 0
+				for ; l.input[l.caret + i] == ' ' ||
+					l.input[l.caret + i] == '\t' || l.input[l.caret + i] == '\r'; i++ {}
+				if l.input[l.caret + i] == '(' {
+					l.addToken("Function")
+				} else {
+					l.addToken("Identifier")
+				}
 			}
 			l.pos = l.caret - 1
 		} else if cc >= '0' && cc <= '9' {
@@ -189,14 +196,14 @@ func (l *lexer) Lex() {
 			for ; lxOperators[l.input[l.pos:l.caret]] != ""; l.caret++ {}
 			l.caret--
 			op := l.input[l.pos:l.caret]
-			if op == "-" /* Treating unary or binary minus appart */ {
+			if op == "-" || op == "--" || op == "++" /* Treating unary or binary minus appart */ {
 				lt := l.List.PeekTail()
 				ltk := lt.Kind
 				if ltk == "Number" || ltk == "Identifier" || ltk == "RParen" ||
 					ltk == "RBrack" {
-					l.appendToken("Minus", "-")
+					l.addToken(lxOperators[op])
 				} else {
-					l.appendToken("UnaryMinus", "-u")
+					l.appendToken("Unary" + lxOperators[op], op + "u")
 				}
 			} else {
 				l.addToken(lxOperators[op])

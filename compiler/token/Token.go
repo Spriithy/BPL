@@ -27,5 +27,18 @@ func (t *Token) String() string {
 		sym = fmt.Sprintf("%#v", t.Sym)
 		sym = sym[1:len(sym) - 1]
 	}
-	return fmt.Sprintf("[%4d]\t%-14s " + vfmt, t.Lno, t.Kind, sym)
+	return fmt.Sprintf("[%4d]\t%-16s " + vfmt, t.Lno, t.Kind, sym)
+}
+
+func (t *Token) ShortString() string {
+	vfmt := "%-s"
+	sym := t.Sym
+	if t.Kind == "String" {
+		vfmt = "%-#v"
+	} else if t.Kind == "Character" || t.Kind == "Identifier" {
+		vfmt = "'%-s'"
+		sym = fmt.Sprintf("%#v", t.Sym)
+		sym = sym[1:len(sym) - 1]
+	}
+	return fmt.Sprintf("%-16s " + vfmt, t.Kind, sym)
 }

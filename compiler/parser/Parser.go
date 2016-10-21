@@ -4,17 +4,21 @@ import (
 	"github.com/Spriithy/BPL/compiler/token"
 	"fmt"
 	"os"
+	"github.com/Spriithy/BPL/compiler/ast"
 )
 
 var prOps = map[string]struct {
 	prec   int
 	rAssoc bool
 }{
-	"++" : {50, false}, "--": {50, false},
+	"++" : {50, false}, "--" : {50, false},
+
 	"."  : {40, false},
-	"!"  : {30, true}, "~"  : {30, true},
+
+	"!"  : {30, true}, "~"   : {30, true},
+	"-u" : {29, true}, "--u" : {29, true}, "++u": {29, true},
 	"**" : {28, true},
-	"-u" : {29, true},
+
 	"*"  : {27, false}, "/"  : {27, false}, "%" : {27, false},
 	"+"  : {26, false}, "-"  : {26, false},
 	">>" : {25, false}, "<<" : {25, false},
@@ -25,6 +29,7 @@ var prOps = map[string]struct {
 	"|"  : {20, false},
 	"&&" : {19, false},
 	"||" : {18, false},
+
 	"="  : {10, true}, "+="  : {10, true}, "-=" : {10, true}, "*="  : {10, true},
 	"/=" : {10, true}, "**=" : {10, true}, "^=" : {10, true}, "~="  : {10, true},
 	"|=" : {10, true}, "&="  : {10, true}, "%=" : {10, true}, "<<=" : {10, true},
@@ -63,12 +68,32 @@ func (p *parser) logf(format string, a... interface{}) {
 }
 
 func (p *parser) Parse() {
-	rpn := p.ShuntingYard(p.tokens)
+	r := p.sya(p.tokens)
 
-	ptr := rpn.PeekHead()
-	for ; ptr != nil; ptr = ptr.Next {
-		fmt.Println(ptr.String())
+	g := r.PeekHead()
+	for ; g != nil; g = g.Next {
+		println(g.String())
 	}
+}
+
+/*
+def rpn_to_ast(rpn_tokens):
+    stack = []
+    for token in rpn_tokens:
+        op = OPERATORS.get(token)
+        if op is not None:
+            args = []
+            for _ in range(op.args_count):
+                args.append(stack.pop())
+            node = Node(tuple(reversed(args)), op)
+            stack.append(node)
+        else:
+            stack.append(float(token))
+    return stack[0]
+ */
+func (p *parser) rpnToAST(input token.TQueue) *ast.Node {
+
+	return nil
 }
 
 /*
@@ -100,8 +125,7 @@ While there are tokens to be read:
 			Pop the operator onto the output queue.
 Exit.
  */
-
-func (p *parser) ShuntingYard(input token.TQueue) token.TQueue {
+func (p *parser) sya(input token.TQueue) token.TQueue {
 	stack := token.TokenStack()
 	output := token.TokenQueue()
 
@@ -122,6 +146,8 @@ func (p *parser) ShuntingYard(input token.TQueue) token.TQueue {
 				}
 				output.Enqueue(op)
 			}
+		case "Function":
+			stack.Push(tok)
 		default:
 			if o1, isOp := prOps[tok.Sym]; isOp {
 				// token is an operator
