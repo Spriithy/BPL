@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cd1cb92-7c33-451d-9ad1-d2f5ea507196" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Main.go" afterPath="$PROJECT_DIR$/Main.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vm/Bytecode.go" afterPath="$PROJECT_DIR$/vm/Bytecode.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vm/Stack.go" afterPath="$PROJECT_DIR$/vm/Stack.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vm/VirtualMachine.go" afterPath="$PROJECT_DIR$/vm/VirtualMachine.go" />
     </list>
     <ignored path="BPL.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -71,7 +68,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="480">
@@ -144,11 +141,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Stack.go" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Stack.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vm/Stack.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="43" column="58" selection-start-line="43" selection-start-column="58" selection-end-line="43" selection-end-column="58" />
+            <state relative-caret-position="240">
+              <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
               <folding>
                 <element signature="e#12#28#0" expanded="true" />
               </folding>
@@ -212,9 +209,9 @@
         <option value="$PROJECT_DIR$/vm/ErrorHandler.go" />
         <option value="$PROJECT_DIR$/vm/VirtualTypes.go" />
         <option value="$PROJECT_DIR$/vm/Bytecode.go" />
-        <option value="$PROJECT_DIR$/vm/Stack.go" />
         <option value="$PROJECT_DIR$/vm/VirtualMachine.go" />
         <option value="$PROJECT_DIR$/Main.go" />
+        <option value="$PROJECT_DIR$/vm/Stack.go" />
       </list>
     </option>
   </component>
@@ -888,12 +885,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vm/Stack.go">
+    <entry file="file://$PROJECT_DIR$/Main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="43" column="58" selection-start-line="43" selection-start-column="58" selection-end-line="43" selection-end-column="58" />
+        <state relative-caret-position="480">
+          <caret line="32" column="29" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
           <folding>
-            <element signature="e#12#28#0" expanded="true" />
+            <element signature="e#14#139#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -945,12 +942,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main.go">
+    <entry file="file://$PROJECT_DIR$/vm/Stack.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="29" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+        <state relative-caret-position="240">
+          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
           <folding>
-            <element signature="e#14#139#0" expanded="true" />
+            <element signature="e#12#28#0" expanded="true" />
           </folding>
         </state>
       </provider>

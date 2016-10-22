@@ -14,7 +14,7 @@ type Stack struct {
 //     s.data     will be an empty slice of VirtValues
 //     s.sp       is set to -1
 func NewStack() *Stack {
-	return &Stack{*new([]VirtualValue), -1}
+	return &Stack{make([]VirtualValue, 1000), -1}
 }
 
 // Peeks the top of the stack without poping it
