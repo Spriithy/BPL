@@ -239,4 +239,7 @@ var InstructionTable = map[Bytecode]Instruction{
 	POW: {"pow", 0}, EXP: {"exp", 0},
 	LOG_2: {"log_2", 0}, LOG_E: {"log_E", 0},
 	LOG_10: {"log_10", 0}, LOG_X: {"log_x", 0},
+
+	BR: {"branch", 1}, BR_0: {"branch_0", 1},
+	IF_0: {"if_0", 2}, IF_N0: {"if_n0", 2},
 }

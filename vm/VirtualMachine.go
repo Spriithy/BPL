@@ -181,25 +181,9 @@ func (v *vm) run(iip int) {
 				break
 			}
 		case INC:
-			val := v.Pop()
-			switch val.Type() {
-			case VIRTUAL_INTEGER:
-				v.PushI(val.ToInt() + 1)
-			case VIRTUAL_REAL:
-				v.PushR(val.ToReal() + 1.0)
-			default:
-				break
-			}
+		// TODO
 		case DEC:
-			v1 := v.Pop()
-			switch v1.Type() {
-			case VIRTUAL_INTEGER:
-				v.PushI(v1.ToInt() - 1)
-			case VIRTUAL_REAL:
-				v.PushR(v1.ToReal() - 1.0)
-			default:
-				break
-			}
+		// TODO
 		case DIV:
 			v2 := v.PopR()
 			v1 := v.PopR()
@@ -317,146 +301,135 @@ func (v *vm) run(iip int) {
 			v.Push(v4); v.Push(v3)
 		// Branch if
 		case BR:
-			v.ip++
 			v.ip = int(v.code[v.ip])
 		case BR_0:
-			v.ip++
 			if v.PopI() == 0 {
 				v.ip = int(v.code[v.ip])
 			}
 		case BR_N0:
-			v.ip++
 			if v.PopI() != 0 {
 				v.ip = int(v.code[v.ip])
 			}
 		case BR_LT:
 			v2 := v.PopR()
 			v1 := v.PopR()
-			v.ip++
 			if v1 < v2 {
 				v.ip = int(v.code[v.ip])
 			}
 		case BR_GT:
 			v2 := v.PopR()
 			v1 := v.PopR()
-			v.ip++
 			if v1 > v2 {
 				v.ip = int(v.code[v.ip])
 			}
 		case BR_LEQ:
 			v2 := v.PopR()
 			v1 := v.PopR()
-			v.ip++
 			if v1 <= v2 {
 				v.ip = int(v.code[v.ip])
 			}
 		case BR_GEQ:
 			v2 := v.PopR()
 			v1 := v.PopR()
-			v.ip++
 			if v1 >= v2 {
 				v.ip = int(v.code[v.ip])
 			}
 		case BR_EQ:
 			v2 := v.PopR()
 			v1 := v.PopR()
-			v.ip++
 			if v1 == v2 {
 				v.ip = int(v.code[v.ip])
 			}
 		case BR_NEQ:
 			v2 := v.PopR()
 			v1 := v.PopR()
-			v.ip++
 			if v1 != v2 {
 				v.ip = int(v.code[v.ip])
 			}
 		case BR_NUL:
 			v1 := v.Pop()
-			v.ip++
 			if v1.Type() == VIRTUAL_NULL {
 				v.ip = int(v.code[v.ip])
 			}
 		case BR_NNUL:
 			v1 := v.Pop()
-			v.ip++
 			if v1.Type() != VIRTUAL_NULL {
 				v.ip = int(v.code[v.ip])
 			}
 		// If-Else
 		case IF_0:
 			if v.PopI() == 0 {
-				v.ip = int(v.code[v.ip + 1])
+				v.ip = int(v.code[v.ip])
 			} else {
-				v.ip = int(v.code[v.ip + 2])
+				v.ip = int(v.code[v.ip + 1])
 			}
 		case IF_N0:
 			if v.PopI() != 0 {
-				v.ip = int(v.code[v.ip + 1])
+				v.ip = int(v.code[v.ip])
 			} else {
-				v.ip = int(v.code[v.ip + 2])
+				v.ip = int(v.code[v.ip + 1])
 			}
 		case IF_LT:
 			v2 := v.PopR()
 			v1 := v.PopR()
 			if v1 < v2 {
-				v.ip = int(v.code[v.ip + 1])
+				v.ip = int(v.code[v.ip])
 			} else {
-				v.ip = int(v.code[v.ip + 2])
+				v.ip = int(v.code[v.ip + 1])
 			}
 		case IF_GT:
 			v2 := v.PopR()
 			v1 := v.PopR()
 			if v1 > v2 {
-				v.ip = int(v.code[v.ip + 1])
+				v.ip = int(v.code[v.ip])
 			} else {
-				v.ip = int(v.code[v.ip + 2])
+				v.ip = int(v.code[v.ip + 1])
 			}
 		case IF_LEQ:
 			v2 := v.PopR()
 			v1 := v.PopR()
 			if v1 <= v2 {
-				v.ip = int(v.code[v.ip + 1])
+				v.ip = int(v.code[v.ip])
 			} else {
-				v.ip = int(v.code[v.ip + 2])
+				v.ip = int(v.code[v.ip + 1])
 			}
 		case IF_GEQ:
 			v2 := v.PopR()
 			v1 := v.PopR()
 			if v1 >= v2 {
-				v.ip = int(v.code[v.ip + 1])
+				v.ip = int(v.code[v.ip])
 			} else {
-				v.ip = int(v.code[v.ip + 2])
+				v.ip = int(v.code[v.ip + 1])
 			}
 		case IF_EQ:
 			v2 := v.PopR()
 			v1 := v.PopR()
 			if v1 == v2 {
-				v.ip = int(v.code[v.ip + 1])
+				v.ip = int(v.code[v.ip])
 			} else {
-				v.ip = int(v.code[v.ip + 2])
+				v.ip = int(v.code[v.ip + 1])
 			}
 		case IF_NEQ:
 			v2 := v.PopR()
 			v1 := v.PopR()
 			if v1 != v2 {
-				v.ip = int(v.code[v.ip + 1])
+				v.ip = int(v.code[v.ip])
 			} else {
-				v.ip = int(v.code[v.ip + 2])
+				v.ip = int(v.code[v.ip + 1])
 			}
 		case IF_NUL:
 			v1 := v.Pop()
 			if v1.Type() == VIRTUAL_NULL {
-				v.ip = int(v.code[v.ip + 1])
+				v.ip = int(v.code[v.ip])
 			} else {
-				v.ip = int(v.code[v.ip + 2])
+				v.ip = int(v.code[v.ip + 1])
 			}
 		case IF_NNUL:
 			v1 := v.Pop()
 			if v1.Type() != VIRTUAL_NULL {
-				v.ip = int(v.code[v.ip + 1])
+				v.ip = int(v.code[v.ip])
 			} else {
-				v.ip = int(v.code[v.ip + 2])
+				v.ip = int(v.code[v.ip + 1])
 			}
 		// TECHNICAL END
 		}
@@ -474,7 +447,7 @@ func (v *vm) disassemble() {
 	nargs := InstructionTable[op].Nargs
 
 	switch nargs {
-	case 0: fmt.Printf("0x%04X.%02X | %13s | \n", addr, op, name)
+	case 0: fmt.Printf("0x%04X.%02X | %13s | %s\n", addr, op, name, v.String())
 	case 1: fmt.Printf("0x%04X.%02X | %13s | %-8v\n", addr, op, name, v.code[v.ip + 1])
 	case 2: fmt.Printf("0x%04X.%02X | %13s | %-8v %-8v\n", addr, op, name, v.code[v.ip + 1], v.code[v.ip + 2])
 	case 3: fmt.Printf("0x%04X.%02X | %13s | %-8v %-8v %-8v\n", addr, op, name, v.code[v.ip + 1], v.code[v.ip + 2], v.code[v.ip + 3])

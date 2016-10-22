@@ -24,12 +24,12 @@ func main() {
 	println("-----------------------------")
 
 	v := vm.VirtualMachine([]vm.Bytecode{
-		vm.ICONST_N, 'A', vm.ICONST_N, 'B',
-		vm.EQ, vm.LNOUT_VAL,
+		vm.ICONST_0, vm.ICONST_1, vm.IADD, vm.DUP, vm.ICONST_5, vm.IF_LT, 1, 8,
 		vm.HALT,
 	})
 
 	println("    IP    |  INSTRUCTION  | ARGS")
 	v.Start()
+	println(v.Stack.String())
 
 }

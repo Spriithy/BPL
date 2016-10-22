@@ -40,6 +40,11 @@ func (s *Stack) PushR(r float64) {
 }
 
 func (s *Stack) Pop() VirtualValue {
+	if s.Empty() {
+		println("Cannot pop from empty stack!", s.String())
+		os.Exit(1)
+	}
+
 	v := s.data[s.sp]
 	s.sp--
 	return v
