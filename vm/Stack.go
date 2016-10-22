@@ -1,24 +1,28 @@
 package vm
 
+import (
+	"os"
+)
+
 // Used to represent the Inner VM stack
 type Stack struct {
-	data []VirtValue // Stack Data
-	sp   int         // Stack Pointer
+	data []VirtualValue // Stack Data
+	sp   int            // Stack Pointer
 }
 
 // Simply constructs a new Emty Stack
 //     s.data     will be an empty slice of VirtValues
 //     s.sp       is set to -1
 func NewStack() *Stack {
-	return &Stack{*new([]VirtValue), -1}
+	return &Stack{*new([]VirtualValue), -1}
 }
 
 // Peeks the top of the stack without poping it
-func (s *Stack) Peek() VirtValue {
+func (s *Stack) Peek() VirtualValue {
 	return s.data[s.sp] // Simple look-up
 }
 
-func (s *Stack) Push(v VirtValue) {
+func (s *Stack) Push(v VirtualValue) {
 	s.sp++
 	if len(s.data) == s.sp {
 		(*s).data = append((*s).data, v)
@@ -35,22 +39,28 @@ func (s *Stack) PushR(r float64) {
 	s.Push(VirtualReal(r))
 }
 
-func (s *Stack) Pop() VirtValue {
+func (s *Stack) Pop() VirtualValue {
 	v := s.data[s.sp]
 	s.sp--
 	return v
 }
 
 func (s *Stack) PopI() int64 {
-	return s.Pop().ToInt()
+	v1 := s.Pop()
+	if v1.Type() == VIRTUAL_NULL {
+		println("NullPointer to Integer conversion!")
+		os.Exit(1)
+	}
+	return v1.ToInt()
 }
 
 func (s *Stack) PopR() float64 {
-	return s.Pop().ToReal()
-}
-
-func (s *Stack) SP() int {
-	return s.sp
+	v1 := s.Pop()
+	if v1.Type() == VIRTUAL_NULL {
+		println("NullPointer to Real conversion!")
+		os.Exit(1)
+	}
+	return v1.ToReal()
 }
 
 func (s *Stack) Empty() bool {

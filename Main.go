@@ -25,7 +25,7 @@ func main() {
 
 	v := vm.VirtualMachine([]vm.Bytecode{
 		vm.ICONST_N, 'A', vm.ICONST_N, 'B',
-		vm.IEQ, vm.PRINTLN_VAL,
+		vm.EQ, vm.LNOUT_VAL,
 		vm.HALT,
 	})
 

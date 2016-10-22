@@ -1,6 +1,9 @@
 package vm
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type VirtualType int
 
@@ -18,9 +21,9 @@ const (
 type VirtualInt  int64
 type VirtualReal float64
 type VirtualReference uint16
-type VirtNull VirtualInt
+type VirtualNull VirtualInt
 
-type VirtValue interface {
+type VirtualValue interface {
 	Type() VirtualType  // Returns the actual type of the data stored in there
 
 	ToInt() int64       // Returns int value if VirtValue is VirtInt, or int part if VirtReal
@@ -29,8 +32,20 @@ type VirtValue interface {
 	String() string     // Returns the representation of the Virtual Value
 }
 
-func (n VirtNull) Type() VirtualType {
+func (n VirtualNull) Type() VirtualType {
 	return VIRTUAL_NULL
+}
+
+func (n VirtualNull) String() string {
+	return "null"
+}
+
+func (n VirtualNull) ToInt() int64 {
+	return -1
+}
+
+func (n VirtualNull) ToReal() float64 {
+	return math.NaN()
 }
 
 // VIRTUAL INTEGER REPRESENTATION ----------------------------------------------

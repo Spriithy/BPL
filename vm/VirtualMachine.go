@@ -50,14 +50,15 @@ func (v *vm) run(iip int) {
 		v.ip++
 
 		switch op {
-		case NULL:
-			v.stress(
-				UNEXPECTED_OPCODE_ERROR,
-				"Unexpected null *(0x00) opcode during execution")
+		case HALT:
+			v.cleanup()
+			return
+		case NULLREF:
+			v.Push(VirtualNull(0))
+		// IO START
 		case LNFEED: println()
-		case PRINTLN_VAL: print(v.Pop().String() + "\n")
-		case PRINT_VAL: print(v.Pop().String())
-		case PRINT_UNI:
+		case STDOUT_VAL: print(v.Pop().String())
+		case STDOUT_UNI:
 			v1 := v.Pop()
 			if v1.Type() != VIRTUAL_INTEGER {
 				v.stress(
@@ -67,7 +68,7 @@ func (v *vm) run(iip int) {
 			buf := make([]byte, 8)
 			utf8.EncodeRune(buf, rune(v1.ToInt()))
 			print(string(buf))
-		case PRINT_REF:
+		case STDOUT_REF:
 			val := v.Pop()
 			if val.Type() != VIRTUAL_INTEGER {
 				v.stress(
@@ -75,6 +76,26 @@ func (v *vm) run(iip int) {
 					"Processing non-integer reference!")
 			}
 			fmt.Printf("*(0x%X)", val.ToInt())
+		case LNOUT_VAL: print(v.Pop().String() + "\n")
+		case LNOUT_UNI:
+			v1 := v.Pop()
+			if v1.Type() != VIRTUAL_INTEGER {
+				v.stress(
+					INTEGER_VALUE_EXPECTED_ERROR,
+					"Cannot print non-integer value as Unicode character!")
+			}
+			buf := make([]byte, 8)
+			utf8.EncodeRune(buf, rune(v1.ToInt()))
+			print(string(buf) + "\n")
+		case LNOUT_REF:
+			val := v.Pop()
+			if val.Type() != VIRTUAL_INTEGER {
+				v.stress(
+					INVALID_VIRTUAL_REFERENCE_PROCESS_ERROR,
+					"Processing non-integer reference!")
+			}
+			fmt.Printf("*(0x%X)\n", val.ToInt())
+		// START MEMORY
 		case ICONST_0: v.PushI(0)
 		case ICONST_1: v.PushI(1)
 		case ICONST_2: v.PushI(2)
@@ -82,7 +103,7 @@ func (v *vm) run(iip int) {
 		case ICONST_4: v.PushI(4)
 		case ICONST_5: v.PushI(5)
 		case ICONST_N:
-			v1 := int64(v.code[v.ip])
+			v1 := int64(v.code[v.ip]) // TODO create pool
 			v.ip++
 			v.PushI(v1)
 		case RCONST_0: v.PushR(0.0)
@@ -94,6 +115,7 @@ func (v *vm) run(iip int) {
 		case RCONST_E: v.PushR(math.E)
 		case RCONST_PHI: v.PushR(math.Phi)
 		case RCONST_PI: v.PushR(math.Pi)
+		// END MEMORY
 		case CMP:
 			v2 := v.PopR()
 			v1 := v.PopR()
@@ -103,6 +125,60 @@ func (v *vm) run(iip int) {
 				v.PushI(-1)
 			} else {
 				v.PushI(0)
+			}
+		case EQ:
+			if v.PopR() == v.PopR() {
+				v.Push(VIRTUAL_TRUE)
+			} else {
+				v.Push(VIRTUAL_FALSE)
+			}
+		case NEQ:
+			if v.PopR() != v.PopR() {
+				v.Push(VIRTUAL_TRUE)
+			} else {
+				v.Push(VIRTUAL_FALSE)
+			}
+		case LT:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			if v1 < v2 {
+				v.Push(VIRTUAL_TRUE)
+			} else {
+				v.Push(VIRTUAL_FALSE)
+			}
+		case LEQ:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			if v1 <= v2 {
+				v.Push(VIRTUAL_TRUE)
+			} else {
+				v.Push(VIRTUAL_FALSE)
+			}
+		case GT:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			if v1 > v2 {
+				v.Push(VIRTUAL_TRUE)
+			} else {
+				v.Push(VIRTUAL_FALSE)
+			}
+		case GEQ:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			if v1 >= v2 {
+				v.Push(VIRTUAL_TRUE)
+			} else {
+				v.Push(VIRTUAL_FALSE)
+			}
+		case NEG:
+			v1 := v.Pop()
+			switch v1.Type() {
+			case VIRTUAL_INTEGER:
+				v.PushI(-v1.ToInt())
+			case VIRTUAL_REAL:
+				v.PushR(-v1.ToReal())
+			default:
+				break
 			}
 		case INC:
 			val := v.Pop()
@@ -133,30 +209,7 @@ func (v *vm) run(iip int) {
 					"Cannot process division by 0, result is NaN")
 			}
 			v.PushR(v1 / v2)
-		case IEQ:
-			if v.PopI() == v.PopI() {
-				v.Push(VIRTUAL_TRUE)
-			} else {
-				v.Push(VIRTUAL_FALSE)
-			}
-		case INEQ:
-			if v.PopI() != v.PopI() {
-				v.Push(VIRTUAL_TRUE)
-			} else {
-				v.Push(VIRTUAL_FALSE)
-			}
-		case REQ:
-			if v.PopR() == v.PopR() {
-				v.Push(VIRTUAL_TRUE)
-			} else {
-				v.Push(VIRTUAL_FALSE)
-			}
-		case RNEQ:
-			if v.PopR() != v.PopR() {
-				v.Push(VIRTUAL_TRUE)
-			} else {
-				v.Push(VIRTUAL_FALSE)
-			}
+		// Int related
 		case IADD:
 			v2 := v.PopI()
 			v1 := v.PopI()
@@ -218,9 +271,194 @@ func (v *vm) run(iip int) {
 			v.PushI(^v.PopI() - 1)
 		case ICOMPL2:
 			v.PushI(^v.PopI())
-		case HALT:
-			v.cleanup()
-			return
+		// Real related
+		case RADD:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			v.PushR(v1 + v2)
+		case RSUB:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			v.PushR(v1 - v2)
+		case RMUL:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			v.PushR(v1 * v2)
+		case RSHL:
+			v2 := v.PopI()
+			v1 := v.PopR()
+			v.PushR(v1 * math.Pow10(int(v2)))
+		case RSHR:
+			v2 := v.PopI()
+			v1 := v.PopR()
+			v.PushR(v1 * math.Pow10(-int(v2)))
+
+		// TECHNICAL START
+		case NOP: continue
+		case DROP: v.Pop()
+		case DUP:
+			v1 := v.Pop()
+			v.Push(v1); v.Push(v1)
+		case DUP2:
+			v1 := v.Pop()
+			v2 := v.Pop()
+			v.Push(v2); v.Push(v1)
+			v.Push(v2); v.Push(v1)
+		case SWAP:
+			v1 := v.Pop()
+			v2 := v.Pop()
+			v.Push(v2); v.Push(v1)
+		case SWAP2:
+			v1 := v.Pop()
+			v2 := v.Pop()
+			v3 := v.Pop()
+			v4 := v.Pop()
+			v.Push(v2); v.Push(v1)
+			v.Push(v4); v.Push(v3)
+		// Branch if
+		case BR:
+			v.ip++
+			v.ip = int(v.code[v.ip])
+		case BR_0:
+			v.ip++
+			if v.PopI() == 0 {
+				v.ip = int(v.code[v.ip])
+			}
+		case BR_N0:
+			v.ip++
+			if v.PopI() != 0 {
+				v.ip = int(v.code[v.ip])
+			}
+		case BR_LT:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			v.ip++
+			if v1 < v2 {
+				v.ip = int(v.code[v.ip])
+			}
+		case BR_GT:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			v.ip++
+			if v1 > v2 {
+				v.ip = int(v.code[v.ip])
+			}
+		case BR_LEQ:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			v.ip++
+			if v1 <= v2 {
+				v.ip = int(v.code[v.ip])
+			}
+		case BR_GEQ:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			v.ip++
+			if v1 >= v2 {
+				v.ip = int(v.code[v.ip])
+			}
+		case BR_EQ:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			v.ip++
+			if v1 == v2 {
+				v.ip = int(v.code[v.ip])
+			}
+		case BR_NEQ:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			v.ip++
+			if v1 != v2 {
+				v.ip = int(v.code[v.ip])
+			}
+		case BR_NUL:
+			v1 := v.Pop()
+			v.ip++
+			if v1.Type() == VIRTUAL_NULL {
+				v.ip = int(v.code[v.ip])
+			}
+		case BR_NNUL:
+			v1 := v.Pop()
+			v.ip++
+			if v1.Type() != VIRTUAL_NULL {
+				v.ip = int(v.code[v.ip])
+			}
+		// If-Else
+		case IF_0:
+			if v.PopI() == 0 {
+				v.ip = int(v.code[v.ip + 1])
+			} else {
+				v.ip = int(v.code[v.ip + 2])
+			}
+		case IF_N0:
+			if v.PopI() != 0 {
+				v.ip = int(v.code[v.ip + 1])
+			} else {
+				v.ip = int(v.code[v.ip + 2])
+			}
+		case IF_LT:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			if v1 < v2 {
+				v.ip = int(v.code[v.ip + 1])
+			} else {
+				v.ip = int(v.code[v.ip + 2])
+			}
+		case IF_GT:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			if v1 > v2 {
+				v.ip = int(v.code[v.ip + 1])
+			} else {
+				v.ip = int(v.code[v.ip + 2])
+			}
+		case IF_LEQ:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			if v1 <= v2 {
+				v.ip = int(v.code[v.ip + 1])
+			} else {
+				v.ip = int(v.code[v.ip + 2])
+			}
+		case IF_GEQ:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			if v1 >= v2 {
+				v.ip = int(v.code[v.ip + 1])
+			} else {
+				v.ip = int(v.code[v.ip + 2])
+			}
+		case IF_EQ:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			if v1 == v2 {
+				v.ip = int(v.code[v.ip + 1])
+			} else {
+				v.ip = int(v.code[v.ip + 2])
+			}
+		case IF_NEQ:
+			v2 := v.PopR()
+			v1 := v.PopR()
+			if v1 != v2 {
+				v.ip = int(v.code[v.ip + 1])
+			} else {
+				v.ip = int(v.code[v.ip + 2])
+			}
+		case IF_NUL:
+			v1 := v.Pop()
+			if v1.Type() == VIRTUAL_NULL {
+				v.ip = int(v.code[v.ip + 1])
+			} else {
+				v.ip = int(v.code[v.ip + 2])
+			}
+		case IF_NNUL:
+			v1 := v.Pop()
+			if v1.Type() != VIRTUAL_NULL {
+				v.ip = int(v.code[v.ip + 1])
+			} else {
+				v.ip = int(v.code[v.ip + 2])
+			}
+		// TECHNICAL END
 		}
 	}
 }
