@@ -6,7 +6,15 @@ import (
 
 func MakeNode(val token.Token) *Node {
 	val.Next = nil
-	return &Node{val, nil, nil}
+	return &Node{val, 0, nil, nil}
+}
+
+func MakeParentNode(val token.Token, children... *Node) *Node {
+	node := MakeNode(val)
+	for _, v := range children {
+		node.AddChild(v)
+	}
+	return node
 }
 
 type NStack []*Node
@@ -37,6 +45,7 @@ func (s *NStack) Pop() *Node {
 
 type Node struct {
 	Tok     token.Token
+	count   int
 
 	Child   *Node
 	Sibling *Node
@@ -52,6 +61,7 @@ func (n *Node) AddChild(node *Node) {
 		return
 	}
 
+	n.count++
 	node.Sibling = n.Child
 	n.Child = node
 }
@@ -70,22 +80,15 @@ func (n *Node) IsLeaf() bool {
 	return n.Child == nil
 }
 
-/*
-	-> Value or Name if any
-		-> child0
-		-> child0.sibling
-		...
-	-> sibling
- */
 func (n *Node) String() string {
 	str := n.Print("")
 	return str[:len(str) - 1]
 }
 
 func (n *Node) Print(prefix string) string {
-	pat := "┣ "
+	pat := "┣━ "
 	if n.Sibling == nil {
-		pat = "┗ "
+		pat = "┗━ "
 	}
 
 	ext := "    "

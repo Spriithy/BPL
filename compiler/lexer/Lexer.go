@@ -113,6 +113,8 @@ func (l *lexer) Lex() {
 					l.input[l.caret + i] == '\t' || l.input[l.caret + i] == '\r'; i++ {}
 				if l.input[l.caret + i] == '(' {
 					l.addToken("Function")
+				} else if l.input[l.caret + i] == '[' {
+					l.addToken("ArrayName")
 				} else {
 					l.addToken("Identifier")
 				}
@@ -213,10 +215,10 @@ func (l *lexer) Lex() {
 			l.lno++
 			l.lns = l.pos
 			l.peekLine()
-			//if l.List.PeekTail().Sym != "NewLine" {
-			//	l.appendToken("--------------", "NewLine")
-			//	continue
-			//}
+			if l.List.PeekTail().Sym != "NewLine" {
+				l.appendToken("--------------", "NewLine")
+				continue
+			}
 		} else {
 			print(string(cc))
 		}

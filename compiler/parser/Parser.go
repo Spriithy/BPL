@@ -2,9 +2,9 @@ package parser
 
 import (
 	"github.com/Spriithy/BPL/compiler/token"
+	"github.com/Spriithy/BPL/compiler/ast"
 	"fmt"
 	"os"
-	"github.com/Spriithy/BPL/compiler/ast"
 )
 
 var prOps = map[string]struct {
@@ -13,7 +13,7 @@ var prOps = map[string]struct {
 }{
 	"++" : {50, false}, "--" : {50, false},
 
-	"."  : {40, false},
+	"."  : {40, false}, "["  : {40, false},
 
 	"!"  : {30, true}, "~"   : {30, true},
 	"-u" : {29, true}, "--u" : {29, true}, "++u": {29, true},
@@ -70,30 +70,7 @@ func (p *parser) logf(format string, a... interface{}) {
 func (p *parser) Parse() {
 	r := p.sya(p.tokens)
 
-	g := r.PeekHead()
-	for ; g != nil; g = g.Next {
-		println(g.String())
-	}
-}
-
-/*
-def rpn_to_ast(rpn_tokens):
-    stack = []
-    for token in rpn_tokens:
-        op = OPERATORS.get(token)
-        if op is not None:
-            args = []
-            for _ in range(op.args_count):
-                args.append(stack.pop())
-            node = Node(tuple(reversed(args)), op)
-            stack.append(node)
-        else:
-            stack.append(float(token))
-    return stack[0]
- */
-func (p *parser) rpnToAST(input token.TQueue) *ast.Node {
-
-	return nil
+	println(r.String())
 }
 
 /*
@@ -125,57 +102,112 @@ While there are tokens to be read:
 			Pop the operator onto the output queue.
 Exit.
  */
-func (p *parser) sya(input token.TQueue) token.TQueue {
-	stack := token.TokenStack()
-	output := token.TokenQueue()
+func (p *parser) sya(input token.TQueue) *ast.Node {
+	var operands ast.NStack
+	var operators *token.TStack
+
+	operands = make(ast.NStack, 0)
+	operators = token.TokenStack()
 
 	for tok := input.Dequeue(); tok.Sym != "EOF"; tok = input.Dequeue() {
 		switch tok.Kind {
 		case "LParen":
-			stack.Push(tok) // push "(" to stack
+			operators.Push(tok)
 		case "RParen":
 			for {
 				// pop item ("(" or operator) from stack
-				if stack.Empty() {
+				if operators.Empty() {
 					p.errorf("Unmatched parenthesis on line %d, expected '(' to match closing parenthesis in expression", p.lno)
 				}
 
-				op := stack.Pop()
+				op := operators.Pop()
 				if op.Sym == "(" {
 					break // discard "("
 				}
-				output.Enqueue(op)
+
+				if isUnary(op.Sym) {
+					node := ast.MakeNode(*op)
+					node.AddChild(operands.Pop())
+					operands.Push(node)
+					break
+				}
+
+				RHS := operands.Pop()
+				LHS := operands.Pop()
+				operands.Push(ast.MakeParentNode(*op, RHS, LHS))
 			}
-		case "Function":
-			stack.Push(tok)
+		case "Semicolon":
+			// drain stack to temporary result
+			for !operators.Empty() {
+				if operators.PeekTop().Sym == "(" {
+					p.errorf("Unmatched parenthesis on line %d, expected ')' to match previous parenthesis in expression", p.lno)
+				}
+
+				RHS := operands.Pop()
+				LHS := operands.Pop()
+				operands.Push(ast.MakeParentNode(*operators.Pop(), RHS, LHS))
+			}
+		case "--------------" /* NewLine */ :
+			// drain stack to temporary result
+			for !operators.Empty() {
+				if operators.PeekTop().Sym == "(" {
+					p.errorf("Unmatched parenthesis on line %d, expected ')' to match previous parenthesis in expression", p.lno)
+				}
+
+				RHS := operands.Pop()
+				LHS := operands.Pop()
+				operands.Push(ast.MakeParentNode(*operators.Pop(), RHS, LHS))
+			}
 		default:
 			if o1, isOp := prOps[tok.Sym]; isOp {
 				// token is an operator
-				for !stack.Empty() {
+				for !operators.Empty() {
 					// consider top item on stack
-					op := stack.PeekTop()
+					op := operators.PeekTop()
 					if o2, isOp := prOps[op.Sym]; !isOp || o1.prec > o2.prec ||
 						o1.prec == o2.prec && o1.rAssoc {
 						break
 					}
+
 					// top item is an operator that needs to come off
-					output.Enqueue(stack.Pop()) // pop it and add it to result
+					op = operators.Pop()
+					if isUnary(op.Sym) {
+						node := ast.MakeNode(*op)
+						node.AddChild(operands.Pop())
+						operands.Push(node)
+						break
+					}
+					RHS := operands.Pop()
+					LHS := operands.Pop()
+					operands.Push(ast.MakeParentNode(*op, RHS, LHS))
 				}
 				// push operator (the new one) to stack
-				stack.Push(tok)
+				operators.Push(tok)
 			} else {
-				output.Enqueue(tok)
+				operands.Push(ast.MakeNode(*tok))
 			}
 		}
 	}
 
 	// drain stack to result
-	for !stack.Empty() {
-		if stack.PeekTop().Sym == "(" {
+	for !operators.Empty() {
+		if operators.PeekTop().Sym == "(" {
 			p.errorf("Unmatched parenthesis on line %d, expected ')' to match previous parenthesis in expression", p.lno)
 		}
-		output.Enqueue(stack.Pop())
+
+		RHS := operands.Pop()
+		LHS := operands.Pop()
+		operands.Push(ast.MakeParentNode(*operators.Pop(), RHS, LHS))
 	}
 
-	return *output
+	result := operands.Pop()
+	for !operands.Empty() {
+		result.AddSibling(operands.Pop())
+	}
+
+	return result
+}
+
+func isUnary(op string) bool {
+	return op == "-u" || op == "!" || op == "++" || op == "--" || op == "++u" || op == "--u"
 }
