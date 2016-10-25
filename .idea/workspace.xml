@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cd1cb92-7c33-451d-9ad1-d2f5ea507196" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vm/Stack.go" afterPath="$PROJECT_DIR$/vm/Stack.go" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/object/Object.go" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vm/context/Context.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Main.go" afterPath="$PROJECT_DIR$/Main.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vm/Bytecode.go" afterPath="$PROJECT_DIR$/vm/Bytecode.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vm/VirtualMachine.go" afterPath="$PROJECT_DIR$/vm/VirtualMachine.go" />
     </list>
     <ignored path="BPL.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -20,48 +25,6 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="Bytecode.go" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/vm/Bytecode.go">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="884">
-                    <caret line="243" column="7" selection-start-line="243" selection-start-column="7" selection-end-line="243" selection-end-column="7" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="ErrorHandler.go" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/vm/ErrorHandler.go">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="630">
-                    <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
-                    <folding>
-                      <element signature="e#12#23#0" expanded="true" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="VirtualError.go" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/vm/VirtualError.go">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="150">
-                    <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="BPL" />
@@ -72,9 +35,9 @@
         <entry file="file://$PROJECT_DIR$/Main.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="480">
-              <caret line="32" column="29" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+              <caret line="36" column="1" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
               <folding>
-                <element signature="e#14#139#0" expanded="true" />
+                <element signature="e#14#145#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -83,8 +46,8 @@
       <file leaf-file-name="VirtualMachine.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vm/VirtualMachine.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="48" column="14" selection-start-line="48" selection-start-column="14" selection-end-line="48" selection-end-column="14" />
+            <state relative-caret-position="60">
+              <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
               <folding>
                 <element signature="e#12#53#0" expanded="true" />
                 <element signature="e#737#772#0" expanded="false" />
@@ -109,22 +72,53 @@
                 <element signature="e#3998#4064#0" expanded="false" />
                 <element signature="e#4067#4264#0" expanded="false" />
                 <element signature="e#4267#4464#0" expanded="false" />
+                <element signature="e#4467#4533#0" expanded="false" />
+                <element signature="e#4536#4601#0" expanded="false" />
+                <element signature="e#4604#4670#0" expanded="false" />
                 <element signature="e#4673#4785#0" expanded="false" />
                 <element signature="e#4788#4827#0" expanded="false" />
+                <element signature="e#4830#4865#0" expanded="false" />
                 <element signature="e#4886#4952#0" expanded="false" />
                 <element signature="e#4955#5021#0" expanded="false" />
+                <element signature="e#5024#5090#0" expanded="false" />
                 <element signature="e#5093#5176#0" expanded="false" />
                 <element signature="e#5179#5263#0" expanded="false" />
-                <element signature="e#5330#5382#0" expanded="false" />
-                <element signature="e#5385#5481#0" expanded="false" />
-                <element signature="e#5484#5554#0" expanded="false" />
-                <element signature="e#5557#5688#0" expanded="false" />
-                <marker date="1477179656000" expanded="false" signature="4477:4533" ph="..." />
-                <marker date="1477179656000" expanded="false" signature="4545:4601" ph="..." />
-                <marker date="1477179656000" expanded="false" signature="4614:4670" ph="..." />
-                <marker date="1477179656000" expanded="false" signature="4843:4865" ph="..." />
-                <marker date="1477179656000" expanded="false" signature="5034:5090" ph="..." />
+                <element signature="e#5329#5381#0" expanded="false" />
+                <element signature="e#5384#5480#0" expanded="false" />
+                <element signature="e#5483#5553#0" expanded="false" />
+                <element signature="e#5556#5687#0" expanded="false" />
+                <element signature="e#5705#5741#0" expanded="false" />
+                <element signature="e#5744#5810#0" expanded="false" />
+                <element signature="e#5813#5880#0" expanded="false" />
+                <element signature="e#5896#6007#0" expanded="false" />
+                <element signature="e#6010#6122#0" expanded="false" />
+                <element signature="e#6125#6268#0" expanded="false" />
+                <element signature="e#6271#6415#0" expanded="false" />
+                <element signature="e#6418#6560#0" expanded="false" />
+                <element signature="e#6563#6706#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Object.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/object/Object.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="570">
+              <caret line="38" column="1" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
+              <folding>
+                <element signature="e#16#63#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Context.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vm/context/Context.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -132,7 +126,7 @@
       <file leaf-file-name="VirtualTypes.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vm/VirtualTypes.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
+            <state relative-caret-position="600">
               <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
               <folding>
                 <element signature="e#12#37#0" expanded="true" />
@@ -141,11 +135,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Stack.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Stack.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vm/Stack.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
-              <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding>
                 <element signature="e#12#28#0" expanded="true" />
               </folding>
@@ -208,10 +202,15 @@
         <option value="$PROJECT_DIR$/vm/VirtualError.go" />
         <option value="$PROJECT_DIR$/vm/ErrorHandler.go" />
         <option value="$PROJECT_DIR$/vm/VirtualTypes.go" />
-        <option value="$PROJECT_DIR$/vm/Bytecode.go" />
-        <option value="$PROJECT_DIR$/vm/VirtualMachine.go" />
-        <option value="$PROJECT_DIR$/Main.go" />
         <option value="$PROJECT_DIR$/vm/Stack.go" />
+        <option value="$PROJECT_DIR$/Main.go" />
+        <option value="$PROJECT_DIR$/vm/Bytecode.go" />
+        <option value="$PROJECT_DIR$/vm/instructions.go" />
+        <option value="$PROJECT_DIR$/vm/structures.go" />
+        <option value="$PROJECT_DIR$/vm/structures/Stack.go" />
+        <option value="$PROJECT_DIR$/vm/context/Context.go" />
+        <option value="$PROJECT_DIR$/vm/VirtualMachine.go" />
+        <option value="$PROJECT_DIR$/object/Object.go" />
       </list>
     </option>
   </component>
@@ -267,41 +266,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BPL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BPL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BPL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BPL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BPL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -344,7 +309,27 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BPL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BPL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BPL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -358,8 +343,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/vm" />
+      <recent name="$PROJECT_DIR$/vm/structures" />
+      <recent name="$PROJECT_DIR$/vm/bytecode" />
+      <recent name="$PROJECT_DIR$/vm/virtuals" />
       <recent name="$PROJECT_DIR$/compiler" />
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager" selected="Go Application.Test">
@@ -555,17 +543,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="1024" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24285714" sideWeight="0.46282724" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24285714" sideWeight="0.45445025" order="3" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24285714" sideWeight="0.5371728" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24285714" sideWeight="0.54554975" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -576,6 +563,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.32975295" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" x="1055" y="52" width="620" height="346" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39957035" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
@@ -593,44 +581,27 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="17" />
+      <option name="time" value="19" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vm/Data.go" />
-    <entry file="file://$PROJECT_DIR$/vm/Pool.go" />
-    <entry file="file://$PROJECT_DIR$/vm/Array.go" />
-    <entry file="file://$PROJECT_DIR$/vm/String.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="44" column="52" selection-start-line="44" selection-start-column="52" selection-end-line="44" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/vm/String.go" />
     <entry file="file://$PROJECT_DIR$/bpls.bpl" />
     <entry file="file://$PROJECT_DIR$/vince.go" />
     <entry file="file:///usr/local/Cellar/go/1.7.1/libexec/src/syscall/zerrors_darwin_amd64.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9990">
           <caret line="740" column="8" selection-start-line="740" selection-start-column="8" selection-end-line="740" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../Sir/SirLex/src/sir/compiler/Token.java" />
-    <entry file="file://$PROJECT_DIR$/vm/Machine.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/vm/Machine.go" />
     <entry file="file:///usr/local/Cellar/go/1.7.1/libexec/src/os/file.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="248" column="5" selection-start-line="248" selection-start-column="5" selection-end-line="248" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -645,7 +616,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="309">
           <caret line="106" column="6" selection-start-line="106" selection-start-column="6" selection-end-line="106" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -661,7 +631,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2421">
           <caret line="41" column="5" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -669,7 +638,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-7968">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -698,7 +666,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -721,14 +688,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/compiler/Parser.go" />
     <entry file="file://$PROJECT_DIR$/compiler/Token.go" />
-    <entry file="file://$PROJECT_DIR$/vm/Natives.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="121" column="5" selection-start-line="121" selection-start-column="5" selection-end-line="121" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/vm/Natives.go" />
     <entry file="file://$PROJECT_DIR$/compiler/Lexer.go" />
     <entry file="file://$PROJECT_DIR$/compiler/parser/TokenStack.go" />
     <entry file="file://$PROJECT_DIR$/compiler/DataStructures.go" />
@@ -736,7 +696,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="43" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -744,23 +703,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
           <caret line="42" column="24" selection-start-line="42" selection-start-column="24" selection-end-line="42" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/compiler/lexer/SYA.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/compiler/lexer/SYA.go" />
     <entry file="file://$PROJECT_DIR$/compiler/lexer/Lexer.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="220" column="12" selection-start-line="220" selection-start-column="12" selection-end-line="220" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -768,33 +718,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
           <caret line="140" column="36" selection-start-line="140" selection-start-column="36" selection-end-line="140" selection-end-column="36" />
-          <folding>
-            <element signature="e#16#121#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vm/Instructions.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vm/Memory.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/vm/Memory.go" />
     <entry file="file://$PROJECT_DIR$/vm/Hash.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -802,7 +733,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="4" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -818,18 +748,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="690">
           <caret line="95" column="15" selection-start-line="95" selection-start-column="15" selection-end-line="95" selection-end-column="16" />
-          <folding>
-            <element signature="e#13#65#0" expanded="false" />
-            <element signature="n#!!block;n#MakeNode#0" expanded="false" />
-            <element signature="n#!!block;n#MakeParentNode#0" expanded="false" />
-            <element signature="n#!!block;n#Empty#0" expanded="false" />
-            <element signature="n#!!block;n#PeekTop#0" expanded="false" />
-            <element signature="n#!!block;n#Pop#0" expanded="false" />
-            <element signature="n#!!block;n#AddChild#0" expanded="false" />
-            <element signature="n#!!block;n#AddSibling#0" expanded="false" />
-            <element signature="n#!!block;n#IsLeaf#0" expanded="false" />
-            <element signature="n#!!block;n#String#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -837,25 +755,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vm/VirtualError.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vm/ErrorHandler.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
-          <folding>
-            <element signature="e#12#23#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -863,42 +762,25 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vm/Bytecode.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="243" column="7" selection-start-line="243" selection-start-column="7" selection-end-line="243" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vm/VirtualTypes.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
-          <folding>
-            <element signature="e#12#37#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Main.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
-          <caret line="32" column="29" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+          <caret line="36" column="1" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
           <folding>
-            <element signature="e#14#139#0" expanded="true" />
+            <element signature="e#14#145#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/vm/instructions.go" />
+    <entry file="file://$PROJECT_DIR$/vm/structures.go" />
     <entry file="file://$PROJECT_DIR$/vm/VirtualMachine.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="48" column="14" selection-start-line="48" selection-start-column="14" selection-end-line="48" selection-end-column="14" />
+        <state relative-caret-position="60">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
           <folding>
             <element signature="e#12#53#0" expanded="true" />
             <element signature="e#737#772#0" expanded="false" />
@@ -923,21 +805,58 @@
             <element signature="e#3998#4064#0" expanded="false" />
             <element signature="e#4067#4264#0" expanded="false" />
             <element signature="e#4267#4464#0" expanded="false" />
+            <element signature="e#4467#4533#0" expanded="false" />
+            <element signature="e#4536#4601#0" expanded="false" />
+            <element signature="e#4604#4670#0" expanded="false" />
             <element signature="e#4673#4785#0" expanded="false" />
             <element signature="e#4788#4827#0" expanded="false" />
+            <element signature="e#4830#4865#0" expanded="false" />
             <element signature="e#4886#4952#0" expanded="false" />
             <element signature="e#4955#5021#0" expanded="false" />
+            <element signature="e#5024#5090#0" expanded="false" />
             <element signature="e#5093#5176#0" expanded="false" />
             <element signature="e#5179#5263#0" expanded="false" />
-            <element signature="e#5330#5382#0" expanded="false" />
-            <element signature="e#5385#5481#0" expanded="false" />
-            <element signature="e#5484#5554#0" expanded="false" />
-            <element signature="e#5557#5688#0" expanded="false" />
-            <marker date="1477179656000" expanded="false" signature="4477:4533" ph="..." />
-            <marker date="1477179656000" expanded="false" signature="4545:4601" ph="..." />
-            <marker date="1477179656000" expanded="false" signature="4614:4670" ph="..." />
-            <marker date="1477179656000" expanded="false" signature="4843:4865" ph="..." />
-            <marker date="1477179656000" expanded="false" signature="5034:5090" ph="..." />
+            <element signature="e#5329#5381#0" expanded="false" />
+            <element signature="e#5384#5480#0" expanded="false" />
+            <element signature="e#5483#5553#0" expanded="false" />
+            <element signature="e#5556#5687#0" expanded="false" />
+            <element signature="e#5705#5741#0" expanded="false" />
+            <element signature="e#5744#5810#0" expanded="false" />
+            <element signature="e#5813#5880#0" expanded="false" />
+            <element signature="e#5896#6007#0" expanded="false" />
+            <element signature="e#6010#6122#0" expanded="false" />
+            <element signature="e#6125#6268#0" expanded="false" />
+            <element signature="e#6271#6415#0" expanded="false" />
+            <element signature="e#6418#6560#0" expanded="false" />
+            <element signature="e#6563#6706#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/object/Object.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="38" column="1" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
+          <folding>
+            <element signature="e#16#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vm/context/Context.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vm/VirtualTypes.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+          <folding>
+            <element signature="e#12#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -945,10 +864,36 @@
     <entry file="file://$PROJECT_DIR$/vm/Stack.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
             <element signature="e#12#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vm/Bytecode.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="873">
+          <caret line="209" column="38" selection-start-line="209" selection-start-column="38" selection-end-line="209" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vm/ErrorHandler.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
+          <folding>
+            <element signature="e#12#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vm/VirtualError.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>

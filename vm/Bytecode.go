@@ -131,22 +131,11 @@ const (
 	BR
 	BR_0
 	BR_N0
-	BR_LT
-	BR_GT
-	BR_LEQ
-	BR_GEQ
-	BR_EQ
-	BR_NEQ
-	BR_NUL
-	BR_NNUL
+
 
 	// ARG0 = Next IP if validate, ARG1 if not
 	IF_0
 	IF_N0
-	IF_LT
-	IF_GT
-	IF_LEQ
-	IF_GEQ
 	IF_EQ
 	IF_NEQ
 	IF_NUL
@@ -240,6 +229,9 @@ var InstructionTable = map[Bytecode]Instruction{
 	LOG_2: {"log_2", 0}, LOG_E: {"log_E", 0},
 	LOG_10: {"log_10", 0}, LOG_X: {"log_x", 0},
 
-	BR: {"branch", 1}, BR_0: {"branch_0", 1},
+	BR: {"branch", 1}, BR_0: {"br_0", 1},
+	BR_N0: {"br_n0", 1},
 	IF_0: {"if_0", 2}, IF_N0: {"if_n0", 2},
+	IF_EQ: {"if_eq", 2}, IF_NEQ: {"if_neq", 2},
+	IF_NUL: {"if_nul", 2}, IF_NNUL: {"if_nnul", 2},
 }

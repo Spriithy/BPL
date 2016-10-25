@@ -276,7 +276,6 @@ func (v *vm) run(iip int) {
 			v2 := v.PopI()
 			v1 := v.PopR()
 			v.PushR(v1 * math.Pow10(-int(v2)))
-
 		// TECHNICAL START
 		case NOP: continue
 		case DROP: v.Pop()
@@ -310,52 +309,6 @@ func (v *vm) run(iip int) {
 			if v.PopI() != 0 {
 				v.ip = int(v.code[v.ip])
 			}
-		case BR_LT:
-			v2 := v.PopR()
-			v1 := v.PopR()
-			if v1 < v2 {
-				v.ip = int(v.code[v.ip])
-			}
-		case BR_GT:
-			v2 := v.PopR()
-			v1 := v.PopR()
-			if v1 > v2 {
-				v.ip = int(v.code[v.ip])
-			}
-		case BR_LEQ:
-			v2 := v.PopR()
-			v1 := v.PopR()
-			if v1 <= v2 {
-				v.ip = int(v.code[v.ip])
-			}
-		case BR_GEQ:
-			v2 := v.PopR()
-			v1 := v.PopR()
-			if v1 >= v2 {
-				v.ip = int(v.code[v.ip])
-			}
-		case BR_EQ:
-			v2 := v.PopR()
-			v1 := v.PopR()
-			if v1 == v2 {
-				v.ip = int(v.code[v.ip])
-			}
-		case BR_NEQ:
-			v2 := v.PopR()
-			v1 := v.PopR()
-			if v1 != v2 {
-				v.ip = int(v.code[v.ip])
-			}
-		case BR_NUL:
-			v1 := v.Pop()
-			if v1.Type() == VIRTUAL_NULL {
-				v.ip = int(v.code[v.ip])
-			}
-		case BR_NNUL:
-			v1 := v.Pop()
-			if v1.Type() != VIRTUAL_NULL {
-				v.ip = int(v.code[v.ip])
-			}
 		// If-Else
 		case IF_0:
 			if v.PopI() == 0 {
@@ -365,38 +318,6 @@ func (v *vm) run(iip int) {
 			}
 		case IF_N0:
 			if v.PopI() != 0 {
-				v.ip = int(v.code[v.ip])
-			} else {
-				v.ip = int(v.code[v.ip + 1])
-			}
-		case IF_LT:
-			v2 := v.PopR()
-			v1 := v.PopR()
-			if v1 < v2 {
-				v.ip = int(v.code[v.ip])
-			} else {
-				v.ip = int(v.code[v.ip + 1])
-			}
-		case IF_GT:
-			v2 := v.PopR()
-			v1 := v.PopR()
-			if v1 > v2 {
-				v.ip = int(v.code[v.ip])
-			} else {
-				v.ip = int(v.code[v.ip + 1])
-			}
-		case IF_LEQ:
-			v2 := v.PopR()
-			v1 := v.PopR()
-			if v1 <= v2 {
-				v.ip = int(v.code[v.ip])
-			} else {
-				v.ip = int(v.code[v.ip + 1])
-			}
-		case IF_GEQ:
-			v2 := v.PopR()
-			v1 := v.PopR()
-			if v1 >= v2 {
 				v.ip = int(v.code[v.ip])
 			} else {
 				v.ip = int(v.code[v.ip + 1])
@@ -447,9 +368,9 @@ func (v *vm) disassemble() {
 	nargs := InstructionTable[op].Nargs
 
 	switch nargs {
-	case 0: fmt.Printf("0x%04X.%02X | %13s | %s\n", addr, op, name, v.String())
-	case 1: fmt.Printf("0x%04X.%02X | %13s | %-8v\n", addr, op, name, v.code[v.ip + 1])
-	case 2: fmt.Printf("0x%04X.%02X | %13s | %-8v %-8v\n", addr, op, name, v.code[v.ip + 1], v.code[v.ip + 2])
-	case 3: fmt.Printf("0x%04X.%02X | %13s | %-8v %-8v %-8v\n", addr, op, name, v.code[v.ip + 1], v.code[v.ip + 2], v.code[v.ip + 3])
+	case 0: fmt.Printf("0x%04X.%02X | %13s | \t\t%s\n", addr, op, name, v.String())
+	case 1: fmt.Printf("0x%04X.%02X | %13s | %v\n", addr, op, name, v.code[v.ip + 1])
+	case 2: fmt.Printf("0x%04X.%02X | %13s | %v, %v\n", addr, op, name, v.code[v.ip + 1], v.code[v.ip + 2])
+	case 3: fmt.Printf("0x%04X.%02X | %13s | %v, %v, %v\n", addr, op, name, v.code[v.ip + 1], v.code[v.ip + 2], v.code[v.ip + 3])
 	}
 }
