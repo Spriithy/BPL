@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="GOPATH &lt;BPL&gt;">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../.." />
       <root url="file://$PROJECT_DIR$/../../../golang.org" />
+      <root url="file://$PROJECT_DIR$/../.." />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="file://$PROJECT_DIR$/../.." />
       <root url="file://$PROJECT_DIR$/../../../golang.org" />
+      <root url="file://$PROJECT_DIR$/../.." />
     </SOURCES>
     <excluded>
       <root url="file://$PROJECT_DIR$" />
